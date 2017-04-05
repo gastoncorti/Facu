@@ -13,10 +13,12 @@ public class Nodo {
 
     private int elem;
     private Nodo enlace;
+    private int altura;
 
     public Nodo(int ele) {
         elem = ele;
         enlace = null;
+        altura = -1;
     }
 
     public Nodo(int ele, Nodo enla) {
@@ -39,4 +41,12 @@ public class Nodo {
     public void setEnlace(Nodo e) {
         enlace = e;
     }
+    
+    public int getAltura() {
+        return altura;
+    }
+    
+    public void setAltura(int alt) {
+        altura = alt;
+    } 
 }
