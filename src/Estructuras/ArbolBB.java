@@ -41,6 +41,79 @@ public class ArbolBB {
         return esCorrecto;
     }
 
+    public boolean eliminar(int elem) {
+        NodoArbB n = getNodo(raiz, elem);
+        boolean esCorrecto = false;
+        if (n != null) {
+            esCorrecto = eliminarAux(n);
+        }
+        return esCorrecto;
+    }
+
+    private boolean eliminarAux(NodoArbB nodoEliminar) {
+        if (nodoEliminar.getIzq() != null) {
+            if (nodoEliminar.getDer() != null) {
+                //suscesor
+                nodoEliminar = sucesor(nodoEliminar.getDer());
+            } else {
+                //caso tiene hIzq
+                nodoEliminar = nodoEliminar.getIzq();
+            }
+        } else {
+            if (nodoEliminar.getDer() != null) {
+                //caso tiene hDer
+                nodoEliminar = nodoEliminar.getDer();
+            } else {
+                //caso es hoja
+                nodoEliminar = null;
+            }
+        }
+
+        return true;
+    }
+
+    private NodoArbB getNodo(NodoArbB raizActual, int elem) {
+        NodoArbB nodo = null;
+        if (raizActual != null) {
+            if (raizActual.getElem() > elem) {
+                if (raizActual.getIzq() != null) {
+                    if(raizActual.getIzq().getElem() == elem) {
+                        nodo = raizActual;
+                    }
+                    nodo = getNodo(raizActual.getIzq(), elem);
+                } else {
+                    nodo = getNodo(raizActual.getDer(), elem);
+                }
+            } else {
+                nodo = raizActual;
+            }
+        }
+        return nodo;
+    }
+
+    private NodoArbB getNodo1(NodoArbB raizActual, int elem) {
+        NodoArbB nodo = null;
+        if (raizActual != null) {
+            if (raizActual.getElem() != elem) {
+                if (raizActual.getElem() > elem) {
+                    nodo = getNodo(raizActual.getIzq(), elem);
+                } else {
+                    nodo = getNodo(raizActual.getDer(), elem);
+                }
+            } else {
+                nodo = raizActual;
+            }
+        }
+        return nodo;
+    }
+
+    private NodoArbB sucesor(NodoArbB sucesor) {
+        while (sucesor.getIzq() != null) {
+            sucesor = sucesor.getIzq();
+        }
+        return sucesor;
+    }
+
     public boolean pertenece(int elem) {
         return perteneceAux(elem, raiz);
     }
@@ -98,19 +171,20 @@ public class ArbolBB {
         }
         return padre;
     }
+
     public int altura() {
         return alturaAux(raiz);
     }
-    
+
     private int alturaAux(NodoArbB raizActual) {
-        int altD=0,altI=0,alt;
-        if(raizActual != null) {
-            if(raizActual.getIzq() != null) {
+        int altD = 0, altI = 0, alt;
+        if (raizActual != null) {
+            if (raizActual.getIzq() != null) {
                 altI = 1 + alturaAux(raizActual.getIzq());
             }
-            if(raizActual.getDer() != null) {
+            if (raizActual.getDer() != null) {
                 altD = 1 + alturaAux(raizActual.getDer());
-            } 
+            }
             alt = (altI >= altD) ? altI : altD;
         } else {
             alt = 0;
@@ -131,14 +205,14 @@ public class ArbolBB {
         clonarAux(raiz, clon);
         return clon;
     }
-    
+
     private void clonarAux(NodoArbB raizActual, ArbolBB clon) {
-        if(raizActual != null) {
+        if (raizActual != null) {
             clon.insertar(raizActual.getElem());
-            if(raizActual.getIzq() != null) {
+            if (raizActual.getIzq() != null) {
                 clonarAux(raizActual.getIzq(), clon);
             }
-            if(raizActual.getDer() != null) {
+            if (raizActual.getDer() != null) {
                 clonarAux(raizActual.getDer(), clon);
             }
         }
