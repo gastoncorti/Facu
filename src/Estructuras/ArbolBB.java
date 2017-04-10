@@ -246,3 +246,7 @@ public class ArbolBB {
         return 0;
     }
 }
+/*
+   public void listarNivel() {        if (raiz != null) {            listarNivelAux(raiz);        } else {            System.out.println("Sin Elem");        }    }
+    private void listarNivelAux(NodoArbB raizActual) {        Queue cola = new LinkedList();        cola.add(raizActual);        while (!cola.isEmpty()) {            NodoArbB nodoAux = (NodoArbB) cola.poll();            System.out.print(nodoAux.getElem());            if (nodoAux.getIzq() != null) {                cola.add(nodoAux.getIzq());            }            if (nodoAux.getDer() != null) {                cola.add(nodoAux.getDer());            }        }    }
+*/
