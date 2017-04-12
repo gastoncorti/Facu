@@ -1,52 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Estructuras;
 
-/**
- *
- * @author Gaston
- */
 public class Nodo {
 
-    private int elem;
-    private Nodo enlace;
+    private Nodo izq, der;
     private int altura;
+    private int elem;
 
-    public Nodo(int ele) {
-        elem = ele;
-        enlace = null;
-        altura = -1;
+    public Nodo(int elem) {
+        this.elem = elem;
     }
 
-    public Nodo(int ele, Nodo enla) {
-        elem = ele;
-        enlace = enla;
+    public Nodo(int elem, int alt) {
+        this.elem = elem;
+        this.altura = alt;
+    }
+
+    public Nodo getIzq() {
+        return izq;
+    }
+
+    public void setIzq(Nodo izq) {
+        this.izq = izq;
+    }
+
+    public Nodo getDer() {
+        return der;
+    }
+
+    public void setDer(Nodo der) {
+        this.der = der;
+    }
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
     }
 
     public int getElem() {
         return elem;
     }
 
-    public Nodo getEnlace() {
-        return enlace;
+    public void setElem(int elem) {
+        this.elem = elem;
     }
 
-    public void setElem(int e) {
-        elem = e;
-    }
-
-    public void setEnlace(Nodo e) {
-        enlace = e;
-    }
-    
-    public int getAltura() {
-        return altura;
-    }
-    
-    public void setAltura(int alt) {
-        altura = alt;
-    } 
 }
