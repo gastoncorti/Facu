@@ -1,5 +1,6 @@
 package Estructuras;
 
+import Estructuras.Nodo.NodoArbB;
 import java.util.LinkedList;
 import java.util.Queue;
 

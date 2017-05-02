@@ -1,4 +1,5 @@
-package Estructuras;
+package Estructuras.Nodo;
+
 public class NodoVert {
     private int elem;
     private NodoVert sigVertice;

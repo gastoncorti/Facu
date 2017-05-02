@@ -1,4 +1,4 @@
-package Estructuras;
+package Estructuras.Nodo;
 
 public class NodoLista {
 

@@ -1,5 +1,7 @@
 package Estructuras;
 
+import Estructuras.Nodo.NodoArbB;
+
 public class ArbolBB {
     private NodoArbB raiz;
     

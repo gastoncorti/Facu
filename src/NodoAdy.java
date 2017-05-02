@@ -1,4 +1,7 @@
-package Estructuras;
+package Estructuras.Nodo;
+
+import Estructuras.Nodo.NodoVert;
+
 public class NodoAdy {
     private NodoVert vertice;
     private NodoAdy sigAdyacente;

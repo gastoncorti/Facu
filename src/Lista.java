@@ -1,5 +1,7 @@
 package Estructuras;
 
+import Estructuras.Nodo.NodoLista;
+
 public class Lista {
 
     private NodoLista cabecera;
@@ -8,6 +10,11 @@ public class Lista {
         this.cabecera = null;
     }
 
+    public boolean insertar(int elem) {
+       boolean seInserto = false;
+       
+       return seInserto;
+    }
     public boolean insertar(int elem, int pos) {
         boolean seInserto = false;
         if (pos >= 1 || pos <= this.longitud() + 1) {
@@ -25,7 +32,6 @@ public class Lista {
                 seInserto = true;
             }
         }
-
         return seInserto;
     }
 
@@ -44,7 +50,7 @@ public class Lista {
             } else {
                 cabecera = cabecera.getEnlace();
                 seElimino = true;
-            }   
+            }
         }
         return seElimino;
     }
@@ -73,6 +79,16 @@ public class Lista {
 
     public int localizar(int elem) {
         int pos = -1;
+        int indice = 1;
+        NodoLista aux = cabecera;
+        while (aux != null) {
+            if (aux.getElem() != elem) {
+                aux = aux.getEnlace();
+            } else {
+                pos = indice;
+            }
+            indice++;
+        }
         return pos;
     }
 
@@ -86,7 +102,7 @@ public class Lista {
 
     public Lista clonar() {
         Lista clon = new Lista();
-        
+
         return clon;
     }
 
@@ -108,7 +124,7 @@ public class Lista {
     @Override
     public String toString() {
         String cad = "";
-        if(!esVacia()) {
+        if (!esVacia()) {
             NodoLista aux = cabecera;
             for (int i = 1; i <= this.longitud(); i++) {
                 cad = cad + aux.getElem() + ",";
@@ -117,7 +133,7 @@ public class Lista {
         } else {
             cad = "Vacia!";
         }
-        
+
         return cad;
     }
 }

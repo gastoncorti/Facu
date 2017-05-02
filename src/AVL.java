@@ -1,11 +1,12 @@
 package Estructuras;
 
+import Estructuras.Nodo.NodoArb;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class AVL {
 
-    private Nodo raiz;
+    private NodoArb raiz;
 
     public AVL() {
         this.raiz = null;
@@ -16,28 +17,28 @@ public class AVL {
         if (raiz != null) {
             esCorrecto = insertarAux(raiz, null, nuevo);
         } else {
-            raiz = new Nodo(nuevo, 0);
+            raiz = new NodoArb(nuevo, 0);
             esCorrecto = true;
         }
         return esCorrecto;
     }
 
     //BALANCE = altHijoIZQ - alturaHijoDER
-    private boolean insertarAux(Nodo raizActual, Nodo padre, int nuevo) {
+    private boolean insertarAux(NodoArb raizActual, NodoArb padre, int nuevo) {
         boolean esCorrecto = false;
         if (raizActual != null) {
             if (raizActual.getElem() > nuevo) {
                 if (raizActual.getIzq() != null) {
                     esCorrecto = insertarAux(raizActual.getIzq(), raizActual, nuevo);
                 } else {
-                    raizActual.setIzq(new Nodo(nuevo));
+                    raizActual.setIzq(new NodoArb(nuevo));
                     esCorrecto = true;
                 }
             } else if (raizActual.getElem() < nuevo) {
                 if (raizActual.getDer() != null) {
                     esCorrecto = insertarAux(raizActual.getDer(), raizActual, nuevo);
                 } else {
-                    raizActual.setDer(new Nodo(nuevo));
+                    raizActual.setDer(new NodoArb(nuevo));
                     esCorrecto = true;
                 }
             }
@@ -54,7 +55,7 @@ public class AVL {
         return seElimino;
     }
 
-    private boolean eliminarAux(Nodo raizActual, Nodo padre, int elem) {
+    private boolean eliminarAux(NodoArb raizActual, NodoArb padre, int elem) {
         boolean seElimino = false;
         if (raizActual != null) {
             if (raizActual.getElem() != elem) {
@@ -66,7 +67,7 @@ public class AVL {
             } else { //encontre el elemento a eliminar
                 switch (casoEliminacion(raizActual)) {
                     case 1:
-                        Nodo sustituto = new Nodo(buscarSustituto(raizActual));
+                        NodoArb sustituto = new NodoArb(buscarSustituto(raizActual));
                         sustituto.setIzq(raizActual.getIzq());
                         sustituto.setDer(raizActual.getDer());
                         if (eliminar(sustituto.getElem())) {
@@ -111,7 +112,7 @@ public class AVL {
         return seElimino;
     }
 
-    private int casoEliminacion(Nodo nodoEliminar) {
+    private int casoEliminacion(NodoArb nodoEliminar) {
         int caso = -1;
         if (nodoEliminar != null) {
             if (nodoEliminar.getIzq() != null) {
@@ -131,9 +132,9 @@ public class AVL {
         return caso;
     }
 
-    private int buscarSustituto(Nodo nodoEliminar) {
+    private int buscarSustituto(NodoArb nodoEliminar) {
         int sustituto = nodoEliminar.getDer().getElem();
-        Nodo nodoAux = nodoEliminar.getDer();
+        NodoArb nodoAux = nodoEliminar.getDer();
         while (nodoAux.getIzq() != null) {
             sustituto = nodoAux.getIzq().getElem();
             nodoAux = nodoAux.getIzq();
@@ -146,7 +147,7 @@ public class AVL {
 
         if (raiz != null) {
             if (raiz.getElem() != elem) {
-                Nodo nodo = getPadre(raiz, elem);
+                NodoArb nodo = getPadre(raiz, elem);
                 padre = (nodo != null) ? nodo.getElem() : 0;
             } else {
                 padre = raiz.getElem();
@@ -155,8 +156,8 @@ public class AVL {
         return padre;
     }
 
-    private Nodo getPadre(Nodo raizActual, int elem) {
-        Nodo padre = null;
+    private NodoArb getPadre(NodoArb raizActual, int elem) {
+        NodoArb padre = null;
         if (raizActual != null) {
             if (raizActual.getElem() > elem) {//busco por izq
                 if (raizActual.getIzq().getElem() != elem) {
@@ -179,7 +180,7 @@ public class AVL {
         return perteneceAux(elem, raiz);
     }
 
-    public boolean perteneceAux(int elem, Nodo raizActual) {
+    public boolean perteneceAux(int elem, NodoArb raizActual) {
         boolean pertenece = false;
         if (raizActual != null) {
             if (raizActual.getElem() != elem) {
@@ -199,7 +200,7 @@ public class AVL {
         return (raiz == null);
     }
 
-    private int altura(Nodo raizActual) {
+    private int altura(NodoArb raizActual) {
         int alt = 0;
         if (raizActual != null) {
             alt = alturaAux(raizActual);
@@ -211,7 +212,7 @@ public class AVL {
         return alturaAux(raiz);
     }
 
-    private int alturaAux(Nodo raizActual) {
+    private int alturaAux(NodoArb raizActual) {
         int altD = 0, altI = 0, alt;
         if (raizActual != null) {
             if (raizActual.getIzq() != null) {
@@ -241,7 +242,7 @@ public class AVL {
         return clon;
     }
 
-    private void clonarAux(Nodo raizActual, ArbolBB clon) {
+    private void clonarAux(NodoArb raizActual, ArbolBB clon) {
         if (raizActual != null) {
             clon.insertar(raizActual.getElem());
             if (raizActual.getIzq() != null) {
@@ -261,7 +262,7 @@ public class AVL {
         }
     }
 
-    private void listarAux(Nodo nActual) {
+    private void listarAux(NodoArb nActual) {
         if (nActual != null) {
             listarAux(nActual.getIzq());
             System.out.print(nActual.getElem() + ",");
@@ -278,7 +279,7 @@ public class AVL {
         }
     }
 
-    private void listarAlturaAux(Nodo nActual) {
+    private void listarAlturaAux(NodoArb nActual) {
         if (nActual != null) {
             listarAlturaAux(nActual.getIzq());
             System.out.print(nActual.getElem() + ",Alt: " + nActual.getAltura() + "\n");
@@ -294,11 +295,11 @@ public class AVL {
         }
     }
 
-    private void listarNivelAux(Nodo raizActual) {
+    private void listarNivelAux(NodoArb raizActual) {
         Queue cola = new LinkedList();
         cola.add(raizActual);
         while (!cola.isEmpty()) {
-            Nodo nodoAux = (Nodo) cola.poll();
+            NodoArb nodoAux = (NodoArb) cola.poll();
             System.out.print(nodoAux.getElem());
             
             if (nodoAux.getIzq() != null) {
@@ -310,11 +311,11 @@ public class AVL {
         }
     }
 
-    private void balancear(Nodo raizActual, Nodo padre) {
+    private void balancear(NodoArb raizActual, NodoArb padre) {
 
     }
 
-    private int balance(Nodo raizActual) {
+    private int balance(NodoArb raizActual) {
         int res;
         if (raizActual.getIzq() != null) {
             if (raizActual.getDer() != null) {

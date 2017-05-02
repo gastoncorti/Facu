@@ -1,5 +1,7 @@
 package Estructuras;
 
+import Estructuras.Nodo.NodoLista;
+
 public class Cola {
 
     private NodoLista frente, fin;
