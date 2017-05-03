@@ -57,39 +57,37 @@ public class Lista {
 
     public int recuperar(int pos) {
         int elem = 0;
-        if (!esVacia()) {
-            if (pos < 1 || pos > this.longitud()) {
-                if (pos != 1) {
-                    NodoLista aux = cabecera;
-                    int i = 1;
-                    while (i < pos - 1) {
-                        if (aux.getElem() != elem) {
-                            aux = aux.getEnlace();
-                        } else {
-                            elem = aux.getElem();
-                        }
+        if(cabecera != null && (pos > 0 || pos <= this.longitud())) {
+            if(pos == 1) {
+                elem = cabecera.getElem();
+            } else {
+                NodoLista aux = cabecera;
+                int cont = 1;
+                while(aux != null) {
+                    if(cont != pos) {
+                        aux = aux.getEnlace();
+                        cont++;
+                    } else {
+                        elem = aux.getElem();
+                        aux = null;
                     }
-                } else {
-                    elem = cabecera.getElem();
                 }
             }
         }
         return elem;
     }
 
-    public int localizar(int elem) {
-        int pos = -1;
-        int indice = 1;
+    public boolean pertenece(int elem) {
+        boolean pertenece = false;
         NodoLista aux = cabecera;
-        while (aux != null) {
+        while (aux != null && !pertenece) {
             if (aux.getElem() != elem) {
                 aux = aux.getEnlace();
             } else {
-                pos = indice;
+                pertenece = true;
             }
-            indice++;
         }
-        return pos;
+        return pertenece;
     }
 
     public void vaciar() {

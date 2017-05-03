@@ -1,13 +1,14 @@
 package Estructuras.Main;
 
 import Estructuras.Grafo;
+import Estructuras.Lista;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
-        LinkedList<Integer> l;
+        Lista l;
         Grafo g = new Grafo();
         
         g.insertarVertice(1);//A
@@ -30,18 +31,10 @@ public class Main {
         g.insertarArco(3, 6);
         
         l = g.listarProfundidad();
-        
-        for(int temp : l) {
-            System.out.println(temp);
-        }
-        
-        System.out.println("asdasdasdasd");
+        System.out.println(l.toString());
         l = g.listarAnchura();
-        
-        for(int temp : l) {
-            System.out.println(temp);
-        }
-        
+        System.out.println("");
+        System.out.println(l.toString());
         System.out.println(g.existeCamino(1,5));
     }
 }

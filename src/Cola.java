@@ -24,16 +24,16 @@ public class Cola {
         return sePuso;
     }
 
-    public boolean sacar() {
-        boolean seSaco = false;
+    public int sacar() {
+        int elem = -1;
         if (!esVacia()) {
+            elem = frente.getElem();
             frente = frente.getEnlace();
             if(frente == null) {
                 fin = null;
             }
-            seSaco = true;
         }
-        return seSaco;
+        return elem;
     }
 
     public int getFrente() {

@@ -57,7 +57,7 @@ public class Grafo {
         //LinkedList<Integer> visitados = new LinkedList<>();
         NodoVert aux = this.inicio;
         while (aux != null) {
-            if (visitados.localizar(aux.getElem()) <= 0) {
+            if (!visitados.pertenece(aux.getElem())) {
                 profundidadDesde(aux, visitados);
             }
             aux = aux.getSigVertice();
@@ -71,7 +71,7 @@ public class Grafo {
             visitados.insertar(nodov.getElem(), visitados.longitud()+1);
             NodoAdy ady = nodov.getPrimerAdy();
             while (ady != null) {
-                if (visitados.localizar(ady.getVertice().getElem()) <= 0) {
+                if (!visitados.pertenece(ady.getVertice().getElem())) {
                     profundidadDesde(ady.getVertice(), visitados);
                 }
                 ady = ady.getSigAdyacente();
@@ -112,11 +112,11 @@ public class Grafo {
         return existe;
     }
     
-    public LinkedList listarAnchura() {
-        LinkedList<Integer> visitados = new LinkedList<>();
+    public Lista listarAnchura() {
+        Lista visitados = new Lista();
         NodoVert aux = this.inicio;
         while(aux != null) {
-            if(!visitados.contains(aux)) {
+            if(!visitados.pertenece(aux.getElem())) {
                 anchuraDesde(aux, visitados);
             }
             aux = aux.getSigVertice();
@@ -125,20 +125,130 @@ public class Grafo {
         return visitados;
     }
 
-    private void anchuraDesde(NodoVert inicial, LinkedList<Integer> visitados) {
-        LinkedList<Integer> cola = new LinkedList<>();
-        cola.add(inicial.getElem());
-        
-        while(!cola.isEmpty()) {
-            NodoVert auxVert = new NodoVert(cola.poll());
-            visitados.add(auxVert.getElem());
+    private void anchuraDesde(NodoVert inicial, Lista visitados) {
+        Cola cola = new Cola();
+        cola.poner(inicial.getElem());
+        while(!cola.esVacia()) {
+            NodoVert auxVert = new NodoVert(cola.sacar());
+            visitados.insertar(auxVert.getElem(), visitados.longitud()+1);
             NodoAdy auxAdy = auxVert.getPrimerAdy();
             while(auxAdy != null) {
-                if(visitados.contains(auxVert.getElem())) {
-                    cola.add(auxVert.getElem());
+                if(!visitados.pertenece(auxVert.getElem())) {
+                    cola.poner(auxVert.getElem());
                 }
                 auxAdy = auxAdy.getSigAdyacente();
             }
         }
     }
 }
+
+
+/*
+public ListaString caminoMasCorto(String partida, String llegada) { 
+        ListaString visitados = new ListaString(), menor = new ListaString(); 
+        Vertice vPartida = obtenerVertice(partida); 
+        Vertice vLlegada = obtenerVertice(llegada); 
+        if (vPartida != null && vLlegada != null) { 
+            menor = caminoMasCortoAux(vPartida, visitados, menor, llegada); 
+        } 
+        return menor; 
+    } 
+
+
+    private ListaString caminoMasCortoAux(Vertice partida, ListaString visitados, ListaString menor, String llegada) { 
+        Adyacente aux; 
+        ListaString menorAux; 
+        if (!visitados.pertenece(partida.getElemento())) { 
+            visitados.insertar(partida.getElemento(), visitados.longitud() + 1); 
+            if (partida.getElemento().equals(llegada)) { 
+                if (menor.esVacia()) { 
+                    menor = visitados.clonar(); 
+                } else { 
+                    if (visitados.longitud() < menor.longitud()) { 
+                        menor = visitados.clonar(); 
+                    } 
+                } 
+            } else { 
+                aux = partida.getPrimerAdyacente(); 
+                while (aux != null) { 
+                    menorAux = caminoMasCortoAux(aux.getVerticeAdyacente(), visitados, menor, llegada); 
+                    if (!menorAux.esVacia()) { 
+                        if (!menor.esVacia()) { 
+                            if (menorAux.longitud() < menor.longitud()) { 
+                                menor = menorAux.clonar(); 
+                            } 
+                        } else { 
+                            menor = menorAux.clonar(); 
+                        } 
+                    } 
+                    aux = aux.getProximoAdyacente(); 
+                } 
+            } 
+            visitados.eliminar(visitados.longitud()); 
+        } 
+        return menor; 
+    } 
+
+
+    public ListaString caminoMasLargo(String partida, String llegada) { 
+        ListaString visitados = new ListaString(), mayor = new ListaString(); 
+        Vertice vPartida = obtenerVertice(partida); 
+        Vertice vLlegada = obtenerVertice(llegada); 
+        if (vPartida != null && vLlegada != null) { 
+            mayor = caminoMasLargoAux(vPartida, visitados, mayor, llegada); 
+        } 
+        return mayor; 
+    } 
+
+
+    private ListaString caminoMasLargoAux(Vertice partida, ListaString visitados, 
+            ListaString mayor, String llegada) { 
+        Adyacente aux; 
+        ListaString mayorAux; 
+        if (!visitados.pertenece(partida.getElemento())) { 
+            visitados.insertar(partida.getElemento(), visitados.longitud() + 1); 
+            if (partida.getElemento().equals(llegada)) { 
+                if (mayor.esVacia()) { 
+                    mayor = visitados.clonar(); 
+                } else { 
+                    if (visitados.longitud() > mayor.longitud()) { 
+                        mayor = visitados.clonar(); 
+                    } 
+                } 
+            } else { 
+                aux = partida.getPrimerAdyacente(); 
+                while (aux != null) { 
+                    mayorAux = caminoMasCortoAux(aux.getVerticeAdyacente(), visitados, mayor, llegada); 
+                    if (!mayorAux.esVacia()) { 
+                        if (!mayor.esVacia()) { 
+                            if (mayorAux.longitud() > mayor.longitud()) { 
+                                mayor = mayorAux.clonar(); 
+                            } 
+                        } else { 
+                            mayor = mayorAux.clonar(); 
+                        } 
+                    } 
+                    aux = aux.getProximoAdyacente(); 
+                } 
+
+
+            } 
+            visitados.eliminar(visitados.longitud()); 
+        } 
+        return mayor; 
+    } 
+
+
+    private Vertice obtenerVertice(String elem) { 
+        Vertice res = null, aux; 
+        if (inicio != null) { 
+            aux = inicio; 
+            while (aux != null && !aux.getElemento().equals(elem)) { 
+                aux = aux.getSiguienteVertice(); 
+            } 
+            res = aux; 
+        } 
+        return res; 
+    } 
+
+*/
